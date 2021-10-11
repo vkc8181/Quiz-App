@@ -1,0 +1,70 @@
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizz</title>
+    <style>
+        .container{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .question{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+        .field{
+            align-items: center;
+            display: flex;
+            margin: 5px;
+            /* flex-direction: column; */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="/create_quiz" method="post">
+            <div class="container">
+				<%for(var i=1;i<=noOfQues;i++){%>
+				
+				
+                <div class="question">
+                    <div class="field">
+                        <label>Enter question <%=i%>: </label>
+                        <!-- <input type="text" id="q1" required> -->
+                        <textarea name="q<%=i%>" id="q<%=i%>" cols="30" rows="10" required></textarea>
+                    </div>
+                    <div class="field">
+                        <label>Enter the correct answer: </label>
+                        <input type="text" id="a<%=i%>" name="a<%=i%>" required> 
+                    </div>
+                    <div class="field">
+                        <label>Enter option 1: </label>
+                        <input type="text" id="<%=i%>o1" name="<%=i%>o1" required> 
+                    </div>
+                    <div class="field">
+                        <label>Enter option 2(optional): </label>
+                        <input type="text" id="<%=i%>o2" name="<%=i%>o2" > 
+                    </div>
+                    <div class="field">
+                        <label>Enter option 3(optional): </label>
+                        <input type="text" id="<%=i%>o3" name="<%=i%>o3" >
+                    </div>
+                </div> 
+				
+				
+				<%}%>
+
+                <button>Submit</button>
+            </div>
+            
+        </form>
+            
+        
+    </div>
+</body>
+</html>

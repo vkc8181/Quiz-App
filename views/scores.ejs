@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizz</title>
+    <style>
+        .container{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+		table,th,td{
+			border:1px black solid;
+		}
+    </style>
+</head>
+<body>
+    <div class="container">
+		<h1>The scores for quiz  id <%=scores[0].quizid%></h1>
+		<h3>
+			Total marks:<%=scores[0].maxMarks%>
+		</h3>
+		<table>
+			<th><b>Rank</b></th>
+			<th><b>Student name</b></th>
+			<th><b>Marks Obtained</b></th>
+			
+			<%for(let i=0;i<scores.length;i++){%>
+			<tr>
+				<td><%=i+1%></td>
+				<td><%=scores[i].studentName%></td>
+				<td><%=scores[i].marksObtained%></td>
+			</tr>
+			<%}%>
+		</table>
+    </div>
+</body>
+</html>

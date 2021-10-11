@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizz</title>
+    <style>
+        .container{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .question{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+        .field{
+            align-items: center;
+            display: flex;
+            margin: 5px;
+            /* flex-direction: column; */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="/create" method="post">
+            	<div>How many questions you want to add ?</div>
+                <div><input type="number" name="noOfQues"></div>
+
+                <button>Submit</button>
+            
+            
+        </form>
+            
+        
+    </div>
+</body>
+</html>

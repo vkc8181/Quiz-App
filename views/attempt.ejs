@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizz</title>
+    <style>
+        .container{
+            /* align-items: center; */
+            width: 70%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        button{
+            width: 12%;
+        }
+        .question{
+            /* align-items: center; */
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+        .field{
+            align-items: center;
+            display: flex;
+            margin: 5px;
+            /* flex-direction: column; */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="/submit_quiz/<%=quizid%>" method="post">
+            <div class="container">
+				<h1>Quiz ID= <%=quizid%> </h1>
+				
+				<div>Enter your name: <input type="text" name="studentName" required></div>
+				<%console.log(questions);%>
+				<% for(var i=0;i<questions.length;i++){%>
+				
+				<div class="question">
+                    <p id="q<%=i+1%>">
+                        Q<%=i+1%>. <%=questions[i].qStatement%>
+                    </p>
+                    <div><input type="radio" name="ans<%=i+1%>" value="<%=questions[i].options[0]%>"> <%=questions[i].options[0]%> </div>
+                    <div><input type="radio" name="ans<%=i+1%>" value="<%=questions[i].options[1]%>"> <%=questions[i].options[1]%> </div>
+					<div><input type="radio" name="ans<%=i+1%>" value="<%=questions[i].options[2]%>"> <%=questions[i].options[2]%> </div>
+                    <div><input type="radio" name="ans<%=i+1%>" value="<%=questions[i].options[3]%>"> <%=questions[i].options[3]%> </div>
+                </div> 
+				
+				
+				
+				<%}%>
+                <button>Submit</button>
+            </div>
+            
+        </form>
+            
+        
+    </div>
+</body>
+</html>
