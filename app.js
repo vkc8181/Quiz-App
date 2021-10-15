@@ -1,18 +1,14 @@
+require('dotenv').config()
 const express=require('express');
 const app=express();
 const mongoose=require('mongoose');
 const bp=require('body-parser');
 app.use(bp.urlencoded({extended:true})); 
-// DB Connection
-// mongoose.connect("mongodb://localhost:27017/demo3")
-// .then(()=>{console.log("connected")})
-// .catch(err=>{console.log(err)});
 
 //Cloud MongoDB connection
-const DB=`mongodb+srv://vkc:CDfkhG3kJU4S6oK9@cluster0.ogy8o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-mongoose.connect(DB)
-.then(()=>{console.log("connected")})
-.catch(err=>{console.log("Counldnt connect")});
+mongoose.connect(process.env.DB)
+.then(()=>{console.log("Database connected")})
+.catch(err=>{console.log("Couldn't connect:"+err)});
 
  
 //Schema definition
@@ -34,51 +30,16 @@ const Quiz=new mongoose.model('Quiz',quizSchema);
 const Score= new mongoose.model('Score',scoreSchema);
 
 
-//Creating document (documents are inserted in mondo db collection)
-const quiz1=new Quiz({
-	quizid:101,
-	questions:[
-		{
-			qNo:1,
-			qStatement:"How many colours are there in rainbow ?",
-			correctOption:"7",
-			wrongOption1:"6",
-			wrongOption2:"8",
-			wrongOption3:"5"
-		},
-		{
-			qNo:2,
-			qStatement:"Which is faster ?",
-			correctOption:"SSD",
-			wrongOption1:"RAM",
-			wrongOption2:"",
-			wrongOption3:""
-		}
-			  ]
-});
-
-// quiz1.save();
-
-// Quiz.find({},(err,resp)=>{
-	// console.log(resp[0].questions);
-// });
-// // console.log(res);
-
-// console.log("Done");
-
-
 app.get('/',(req,res)=>{
 	console.log('visited');
 	res.render('home.ejs');
 });
 
 app.get('/create',(req,res)=>{
-	// console.log('visited');
 	res.render('quizDetails.ejs');
 });
 
 app.post('/create',(req,res)=>{
-	// console.log('visited');
 	console.log(Number(req.body.noOfQues));
 	res.render('create.ejs',{noOfQues:Number(req.body.noOfQues)});
 });
@@ -86,24 +47,23 @@ app.post('/create',(req,res)=>{
 app.post('/create_quiz',(req,res)=>{
 	const quizid=Math.floor(Math.random()*8999)+1000;
 	const question_array=[];
-	// console.log(req.body);
-	// console.log(req.body["q1"]);
 	for(var i=1;i<=10;i++){
-		// var 
 		const wrongOptions=[];
 		wrongOptions.push(req.body[String(i)+"o1"]);
 		wrongOptions.push(req.body[String(i)+"o2"]);
 		wrongOptions.push(req.body[String(i)+"o3"]);
+
 		const quesObj={
 			qNo:i,qStatement:req.body['q'+String(i)],
 			correctOption:req.body['a'+String(i)],
 			wrongOptions:wrongOptions
 		};
-		console.log(quesObj);
+		// console.log(quesObj);
 		if(quesObj.qStatement)
 			question_array.push(quesObj);
 	}
-	// question_array.push()
+	
+	//Document creation for insertion in Quiz Collection
 	const new_quiz = new Quiz({
 		quizid:quizid,
 		questions:question_array
@@ -123,8 +83,8 @@ app.get('/attempt/:quizid',(req,res)=>{
 	Quiz.find({quizid:req.params.quizid},(err,resp)=>{
 		if(err) console.log('err')
 		else{
-	// console.log(resp[0].questions);
 			const questions=[];
+			//Option shuffling
 			for(let i=0;i<resp[0].questions.length;i++){
 				const options=["","","",""];
 				const optionDone=[false,false,false,false];
@@ -145,7 +105,6 @@ app.get('/attempt/:quizid',(req,res)=>{
 				questions.push(question);
 			}
 			res.render('attempt.ejs',{quizid:req.params.quizid,questions:questions});
-			// res.send('bgg');
 		}
 	});
 });
@@ -186,7 +145,6 @@ app.post('/scores',(req,res)=>{
 				else if(a.marksObtained>b.marksObtained) return -1;
 				return 0;
 			});
-			// console.log(resp);
 			res.render('scores.ejs',{scores:resp});
 		}
 		else{
