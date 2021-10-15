@@ -8,7 +8,7 @@ app.use(bp.urlencoded({extended:true}));
 //Cloud MongoDB connection
 mongoose.connect(process.env.DB)
 .then(()=>{console.log("Database connected")})
-.catch(err=>{console.log("Couldn't connect:"+err)});
+.catch(err=>{console.log("Couldn't connect:"+err)}); 
 
  
 //Schema definition
